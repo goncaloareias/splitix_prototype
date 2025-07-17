@@ -6,7 +6,6 @@ import lombok.*;
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class User {
@@ -23,5 +22,23 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {}
+
+//getters
+
+/*
+    public Email getEmail(){
+        return this.email;
+    }
+
+ */
 }
+
 
