@@ -15,7 +15,10 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String fname;
+
+    @Column(nullable = false)
+    private String lname;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -23,8 +26,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public User(String name, String email, String password) {
-        this.name = name;
+    public User(String fname, String lname, String email, String password) {
+        this.fname = fname;
+        this.lname = lname;
         this.email = email;
         this.password = password;
     }
