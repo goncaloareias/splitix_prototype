@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login | Splitix</title>
+    <style>
+        /* Reset simples */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f5f1; /* branco esverdeado bem suave */
+            color: #1b3a1a; /* verde escuro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: white;
+            padding: 2.5rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(27, 58, 26, 0.15);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #2e7d32; /* verde médio */
+            letter-spacing: 1px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            display: block;
+            color: #1b3a1a;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 0.65rem 1rem;
+            border: 2px solid #a5d6a7; /* verde claro */
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
+
+        button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1b3a1a;
+        }
+
+        .error-message {
+            background-color: #ffcdd2;
+            color: #b71c1c;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4a7c4a;
+        }
+
+        .footer a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #1b3a1a;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Entrar na Splitix</h1>
+
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
+    <form th:action="@{/login}" method="post">
+        <label for="email">Email</label>
+        <input id="email" type="text" name="email" placeholder="exemplo@dominio.com" required autofocus />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" placeholder="••••••••" required />
+
+        <button type="submit">Entrar</button>
+    </form>
+
+    <div class="footer">
+        <p>Esqueceu a password? <a href="/reset-password">Recuperar aqui</a></p>
+        <p>Não tem conta? <a href="/register">Registe-se</a></p>
+    </div>
+</div>
+</body>
+</html>

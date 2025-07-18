@@ -1,6 +1,7 @@
 # 💸 Splitix
 
-Splitix é uma aplicação web para **gestão de despesas partilhadas** entre grupos de pessoas. Ideal para colegas de casa, viagens em grupo, jantares de amigos ou qualquer situação em que seja necessário dividir contas de forma justa e automática.
+Splitix é uma aplicação web para **gestão de despesas partilhadas** entre grupos de pessoas. Ideal para colegas de casa, viagens em grupo, jantares de amigos ou qualquer situação em que seja necessário dividir contas de forma justa e automática. http://localhost:8080/register
+
 
 ---
 

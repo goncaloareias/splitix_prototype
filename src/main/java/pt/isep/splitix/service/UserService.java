@@ -31,6 +31,9 @@ public class UserService {
     public List<User> listUsers() {
         return repo.findAll();
     }
+    public Optional<User> findByEmail(String email) {
+        return repo.findByEmail(email);
+    }
 
     public void changePasswordWithoutOldPassword(String email, String newPassword) {
         Optional<User> userOpt = repo.findByEmail(email);
