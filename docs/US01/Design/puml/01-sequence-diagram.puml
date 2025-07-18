@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome false
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #EEEBDC
+skinparam arrowColor Brown
+skinparam actorBorderColor Brown
+skinparam actorBackgroundColor #EEEBDC
+skinparam participantBorderColor Brown
+skinparam participantBackgroundColor #D2B48C
+skinparam roundcorner 10
+autonumber
+
+title Sequence Diagram (SD) - US01: Registar Utilizador
+
+actor "Utilizador" as User
+participant "<<presentation>>\nRegisterUserUI" as UI
+participant "<<application>>\nRegisterUserController" as Ctrl
+participant "<<service>>\nUserService" as Service
+participant "<<repository>>\nUserRepository" as Repo
+database "Base de Dados" as DB
+
+activate User
+User -> UI : Preenche formulário com nome, email e password
+activate UI
+UI -> Ctrl : submitRegistration(userData)
+activate Ctrl
+Ctrl -> Service : register(userData)
+activate Service
+Service -> Repo : existsByEmail(user.email)
+activate Repo
+Repo -> DB : SELECT * FROM users WHERE email = ?
+DB --> Repo : resultado (true/false)
+Repo --> Service : resultado
+
+alt Email já existe
+    Service --> Ctrl : lança exceção "Email já existe"
+    Ctrl --> UI : envia mensagem de erro
+    UI --> User : mostra erro "Email já existe"
+else Email não existe
+    Service -> Repo : save(user)
+    Repo -> DB : INSERT INTO users (...)
+    DB --> Repo : user salvo com ID
+    Repo --> Service : user salvo
+    Service --> Ctrl : user salvo
+    Ctrl --> UI : confirmação registo bem-sucedido
+    UI --> User : mostra mensagem de sucesso
+end
+
+deactivate Service
+deactivate Ctrl
+deactivate UI
+deactivate User
+@enduml

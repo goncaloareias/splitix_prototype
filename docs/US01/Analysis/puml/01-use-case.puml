@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome false
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #EEEBDC
+skinparam arrowColor Brown
+skinparam actorBorderColor Brown
+skinparam actorBackgroundColor #EEEBDC
+skinparam participantBorderColor Brown
+skinparam participantBackgroundColor #D2B48C
+skinparam roundcorner 10
+autonumber
+
+title System Sequence Diagram (SSD) - US01: Registar Utilizador
+
+actor "Utilizador" as User
+participant ":Sistema" as System
+
+activate User
+User -> System: Inicia registo com dados (nome, email, password)
+activate System
+System --> User: Valida dados e verifica email único
+alt Email já existe
+    System --> User: Notifica erro "Email já existe"
+else Email não existe
+    System --> User: Confirma dados válidos
+    User -> System: Confirma registo
+    System --> User: Registo efetuado com sucesso
+end
+
+deactivate System
+deactivate User
+@enduml
