@@ -40,6 +40,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Balance balance;
+
     public User(String fname, String lname, String email, String password) {
         this.fname = fname;
         this.lname = lname;

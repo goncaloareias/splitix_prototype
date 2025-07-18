@@ -1,4 +1,4 @@
-package pt.isep.splitix.presentation.ui;
+/*package pt.isep.splitix.presentation.ui;
 
 import org.springframework.stereotype.Component;
 import pt.isep.splitix.application.Console;
@@ -33,3 +33,4 @@ public class RegisterUserUI {
         }
     }
 }
+*/

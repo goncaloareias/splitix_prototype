@@ -50,4 +50,11 @@ public class UserService {
         user.setPassword(newPassword);
         repo.save(user);
     }
+
+    public User updateProfile(User currentUser, User updatedData) {
+        currentUser.setFname(updatedData.getFname());
+        currentUser.setLname(updatedData.getLname());
+        currentUser.setEmail(updatedData.getEmail());
+        return repo.save(currentUser);
+    }
 }

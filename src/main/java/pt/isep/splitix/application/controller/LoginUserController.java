@@ -1,5 +1,6 @@
 package pt.isep.splitix.application.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -20,32 +21,24 @@ public class LoginUserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
-    public Optional<User> login(String email, String password) {
-        return userService.login(email, password);
-    }
-
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public void changePasswordWithoutOldPassword(String email, String newPassword) {
-        userService.changePasswordWithoutOldPassword(email, newPassword);
-    }
-
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return "redirect:/dashboard";
+        }
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String email,
                         @RequestParam String password,
+                        HttpSession session,
                         Model model) {
         Optional<User> userOpt = userService.login(email, password);
 
         if (userOpt.isPresent()) {
-            model.addAttribute("user", userOpt.get());
-            return "dashboard";  // Redireciona para dashboard.html
+            session.setAttribute("user", userOpt.get());  // Guarda user na sessão
+            return "redirect:/dashboard";  // Redireciona para dashboard
         } else {
             model.addAttribute("error", "Credenciais inválidas.");
             return "login";
@@ -78,4 +71,3 @@ public class LoginUserController {
         return "success";
     }
 }
-

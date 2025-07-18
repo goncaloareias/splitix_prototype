@@ -1,4 +1,4 @@
-package pt.isep.splitix.presentation;
+/*package pt.isep.splitix.presentation;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,3 +18,4 @@ public class MainRunner implements CommandLineRunner {
         mainMenu.show();
     }
 }
+*/
