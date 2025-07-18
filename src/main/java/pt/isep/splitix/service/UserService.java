@@ -31,4 +31,20 @@ public class UserService {
     public List<User> listUsers() {
         return repo.findAll();
     }
+
+    public void changePasswordWithoutOldPassword(String email, String newPassword) {
+        Optional<User> userOpt = repo.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("Utilizador não encontrado.");
+        }
+
+        if (newPassword.length() < 6) {
+            throw new RuntimeException("A nova password deve ter pelo menos 6 caracteres.");
+        }
+
+        User user = userOpt.get();
+        user.setPassword(newPassword);
+        repo.save(user);
+    }
 }
