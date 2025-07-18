@@ -5,6 +5,7 @@ import pt.isep.splitix.domain.User;
 import pt.isep.splitix.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,6 +21,11 @@ public class UserService {
             throw new RuntimeException("Email já existe");
         }
         return repo.save(user);
+    }
+
+    public Optional<User> login(String email, String password) {
+        return repo.findByEmail(email)
+                .filter(user -> user.getPassword().equals(password));
     }
 
     public List<User> listUsers() {

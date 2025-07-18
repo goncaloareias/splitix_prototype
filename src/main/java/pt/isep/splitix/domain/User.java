@@ -50,8 +50,11 @@ public class User {
     public User() {}
 
 //getters
-
 /*
+    public String getFname() {
+        return fname;
+    }
+
     public Email getEmail(){
         return this.email;
     }
