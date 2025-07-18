@@ -45,7 +45,7 @@ public class LoginUserController {
 
         if (userOpt.isPresent()) {
             model.addAttribute("user", userOpt.get());
-            return "success";  // página de sucesso
+            return "dashboard";  // Redireciona para dashboard.html
         } else {
             model.addAttribute("error", "Credenciais inválidas.");
             return "login";
