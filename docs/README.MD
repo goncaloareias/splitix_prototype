@@ -18,7 +18,7 @@ Splitix é uma aplicação web para **gestão de despesas partilhadas** entre gr
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
-- **Java 17**
+- **Java 21**
 - **Spring Boot**
     - Spring Web
     - Spring Data JPA
