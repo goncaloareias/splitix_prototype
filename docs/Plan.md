@@ -15,6 +15,7 @@ Splitix permite a criação de grupos de utilizadores que registam despesas em c
 
 ### 2. Gestão de Grupos
 
+- **US26** - Como utilizador, quero adicionar amigos para os poder incluir em grupos ou dividir despesas.
 - **US5** - Como utilizador, quero criar um grupo para partilhar despesas com amigos.
 - **US6** - Como utilizador, quero adicionar ou remover membros do meu grupo.
 - **US7** - Como utilizador, quero visualizar os grupos em que participo.

@@ -57,4 +57,21 @@ public class UserService {
         currentUser.setEmail(updatedData.getEmail());
         return repo.save(currentUser);
     }
+
+    public boolean addFriend(String userEmail, String friendEmail) {
+        Optional<User> userOpt = repo.findByEmail(userEmail);
+        Optional<User> friendOpt = repo.findByEmail(friendEmail);
+
+        if (userOpt.isEmpty() || friendOpt.isEmpty()) return false;
+
+        User user = userOpt.get();
+        User friend = friendOpt.get();
+
+        if (user.equals(friend) || user.getFriends().contains(friend)) return false;
+
+        user.getFriends().add(friend);
+        repo.save(user);
+        return true;
+    }
+
 }
