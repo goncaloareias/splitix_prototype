@@ -1,149 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Criar Grupo | Splitix</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        :root {
-            --primary: #2e7d32;
-            --primary-light: #66bb6a;
-            --background: #f6fef6;
-            --text: #2f4f2f;
-            --white: #ffffff;
-            --border: #c8e6c9;
-            --radius: 12px;
-            --danger: #d32f2f;
-            --danger-bg: #fdecea;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 2rem;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
+            padding: 20px;
         }
 
         .container {
-            max-width: 640px;
+            background-color: white;
+            max-width: 600px;
             margin: auto;
-            background-color: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-
-        .back-button {
-            display: inline-block;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        .back-button:hover {
-            color: var(--primary-light);
+            color: #2e7d32;
+            margin-bottom: 20px;
         }
 
         label {
-            font-weight: 600;
             display: block;
-            margin-bottom: 0.3rem;
+            margin-top: 15px;
+            font-weight: bold;
         }
 
-        input,
+        input[type="text"],
         textarea {
             width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            resize: vertical;
-        }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
 
         button {
-            background-color: var(--primary);
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2e7d32;
             color: white;
             border: none;
-            padding: 0.9rem 1.6rem;
-            font-size: 1rem;
-            border-radius: var(--radius);
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: var(--primary-light);
+            background-color: #388e3c;
         }
 
-        .success, .error {
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
+        .back-link {
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
-        .success {
-            background-color: #e8f5e9;
-            color: #1b5e20;
-            border-left: 5px solid var(--primary);
+        .back-link:hover {
+            color: #66bb6a;
         }
 
         .error {
-            background-color: var(--danger-bg);
-            color: var(--danger);
-            border-left: 5px solid var(--danger);
+            color: #d32f2f;
+            margin-top: 10px;
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
+        .success {
+            color: #2e7d32;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <a th:href="@{/dashboard}" class="back-button">← Voltar à Dashboard</a>
+
+    <a th:href="@{/dashboard}" class="back-link">← Voltar à Dashboard</a>
 
     <h2>Criar Novo Grupo</h2>
 
-    <div th:if="${success}" class="success" th:text="${success}"></div>
     <div th:if="${error}" class="error" th:text="${error}"></div>
+    <div th:if="${success}" class="success" th:text="${success}"></div>
 
-    <form th:action="@{/groups/create}" method="post">
-        <label for="name">Nome do Grupo</label>
-        <input type="text" id="name" name="name" placeholder="Ex: Viagem Algarve" required>
+    <form th:action="@{/group-create}" method="post">
+        <label for="name">Nome do Grupo:</label>
+        <input type="text" id="name" name="name" required />
 
-        <label for="memberEmails">Emails dos Membros (separados por vírgula)</label>
-        <textarea id="memberEmails" name="memberEmails" rows="4" placeholder="amigo1@email.com, amigo2@email.com" required></textarea>
+        <label for="memberEmails">Emails dos Membros (separados por vírgulas):</label>
+        <textarea id="memberEmails" name="memberEmails" rows="4" placeholder="exemplo1@email.com, exemplo2@email.com"></textarea>
 
         <button type="submit">Criar Grupo</button>
     </form>
+
 </div>
 </body>
 </html>

@@ -1,8 +1,12 @@
 package pt.isep.splitix.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import pt.isep.splitix.domain.User;
+import pt.isep.splitix.domain.Notification;
+import pt.isep.splitix.domain.Enum.NotificationType;
 import pt.isep.splitix.repository.UserRepository;
+import pt.isep.splitix.repository.NotificationRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +15,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repo;
+    private final NotificationRepository notificationRepo;
 
-    public UserService(UserRepository repo) {
+    public UserService(UserRepository repo, NotificationRepository notificationRepo) {
         this.repo = repo;
+        this.notificationRepo = notificationRepo;
     }
 
     public User register(User user) {
@@ -31,6 +37,7 @@ public class UserService {
     public List<User> listUsers() {
         return repo.findAll();
     }
+
     public Optional<User> findByEmail(String email) {
         return repo.findByEmail(email);
     }
@@ -71,7 +78,24 @@ public class UserService {
 
         user.getFriends().add(friend);
         repo.save(user);
+
+        // Criação da notificação de amizade
+        Notification notification = new Notification(
+                user.getFname() + " quer ser teu amigo!",
+                NotificationType.FRIEND_REQUEST,
+                friend
+        );
+        notificationRepo.save(notification);
+
         return true;
+    }
+
+    public User getCurrentUser(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new RuntimeException("Utilizador não autenticado.");
+        }
+        return user;
     }
 
 }

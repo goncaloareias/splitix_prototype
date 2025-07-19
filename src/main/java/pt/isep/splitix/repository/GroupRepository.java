@@ -5,8 +5,10 @@ import pt.isep.splitix.domain.Group;
 import pt.isep.splitix.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
+    // Muda para devolver lista, porque um user pode ter vários grupos
     List<Group> findByCreator(User creator);
-}
 
+}

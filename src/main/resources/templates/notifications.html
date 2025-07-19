@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificações | Splitix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #66bb6a;
+            --background: #f6fef6;
+            --text: #2f4f2f;
+            --white: #ffffff;
+            --border: #c8e6c9;
+            --radius: 12px;
+            --danger: #d32f2f;
+            --danger-bg: #fdecea;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 640px;
+            margin: auto;
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-button:hover {
+            color: var(--primary-light);
+        }
+
+        ul.notifications-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul.notifications-list li {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            background-color: #f1f8e9;
+            color: var(--text);
+            box-shadow: inset 0 0 5px rgba(46, 125, 50, 0.1);
+        }
+
+        ul.notifications-list li strong {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/dashboard}" class="back-button">← Voltar à Dashboard</a>
+
+    <h2>Notificações</h2>
+
+    <div th:if="${notifications.isEmpty()}">
+        <p>Não tens novas notificações.</p>
+    </div>
+
+    <div th:unless="${notifications.isEmpty()}">
+        <ul class="notifications-list">
+            <li th:each="n : ${notifications}">
+                <strong th:text="${n.type}">TIPO</strong>: <span th:text="${n.message}">Mensagem</span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

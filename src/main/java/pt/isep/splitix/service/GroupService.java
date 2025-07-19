@@ -8,6 +8,7 @@ import pt.isep.splitix.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -35,6 +36,53 @@ public class GroupService {
         group.setMembers(members);
 
         return groupRepo.save(group);
+    }
+
+    public List<Group> findByCreator(User creator) {
+        return groupRepo.findByCreator(creator);
+    }
+
+    public boolean addMember(Long groupId, String memberEmail) {
+        Optional<Group> groupOpt = groupRepo.findById(groupId);
+        Optional<User> userOpt = userRepo.findByEmail(memberEmail);
+
+        if (groupOpt.isEmpty() || userOpt.isEmpty()) {
+            return false;
+        }
+
+        Group group = groupOpt.get();
+        User user = userOpt.get();
+
+        boolean added = group.getMembers().add(user);
+        if (added) {
+            groupRepo.save(group);
+        }
+
+        return added;
+    }
+
+    public boolean removeMember(Long groupId, String memberEmail) {
+        Optional<Group> groupOpt = groupRepo.findById(groupId);
+        Optional<User> userOpt = userRepo.findByEmail(memberEmail);
+
+        if (groupOpt.isEmpty() || userOpt.isEmpty()) {
+            return false;
+        }
+
+        Group group = groupOpt.get();
+        User user = userOpt.get();
+
+        if (user.equals(group.getCreator())) {
+            // Não podes remover o criador
+            return false;
+        }
+
+        boolean removed = group.getMembers().remove(user);
+        if (removed) {
+            groupRepo.save(group);
+        }
+
+        return removed;
     }
 }
 

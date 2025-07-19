@@ -24,9 +24,12 @@ public class Group {
     @ManyToOne
     private User creator;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "group_members",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<User> members = new HashSet<>();
 
-    // Getters e Setters
 }
-
