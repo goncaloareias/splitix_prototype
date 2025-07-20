@@ -4,15 +4,17 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import pt.isep.splitix.domain.Group;
 import pt.isep.splitix.domain.User;
 import pt.isep.splitix.repository.GroupRepository;
 import pt.isep.splitix.repository.UserRepository;
 import pt.isep.splitix.service.GroupService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class GroupController {
@@ -33,24 +35,35 @@ public class GroupController {
     }
 
     @PostMapping("/group-create")
-    public String createGroup(@RequestParam("name") String groupName, HttpSession session) {
+    public String createGroup(
+            @RequestParam("name") String groupName,
+            @RequestParam(value = "memberEmails", required = false) String memberEmailsRaw,
+            HttpSession session,
+            Model model
+    ) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
         }
 
-        if (user.getId() == null) {
-            throw new IllegalStateException("User não está persistido na base de dados.");
+        List<String> memberEmails;
+        if (memberEmailsRaw == null || memberEmailsRaw.trim().isEmpty()) {
+            memberEmails = new ArrayList<>();
+        } else {
+            memberEmails = Arrays.stream(memberEmailsRaw.split(","))
+                    .map(String::trim)
+                    .filter(email -> !email.isEmpty())
+                    .collect(Collectors.toList());
         }
 
-        Group group = new Group();
-        group.setName(groupName);
-        group.setCreator(user); // define o criador
-        // NÃO adiciona membros
+        try {
+            groupService.createGroup(groupName, user.getEmail(), memberEmails);
+            model.addAttribute("success", "Grupo criado com sucesso.");
+        } catch (Exception e) {
+            model.addAttribute("error", "Erro ao criar grupo: " + e.getMessage());
+        }
 
-        groupRepository.save(group);
-
-        return "redirect:/group";
+        return "group-create";
     }
 
 
@@ -58,19 +71,26 @@ public class GroupController {
     @GetMapping("/group")
     public String showGroup(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/login";
-        }
+        if (user == null) return "redirect:/login";
 
         List<Group> groups = groupService.findByCreator(user);
-
-        if (groups.isEmpty()) {
-            model.addAttribute("error", "Não tens grupo criado.");
-            return "group";
-        }
-
         model.addAttribute("groups", groups);
+
         return "group";
     }
 
+    @GetMapping("/group/{groupId}")
+    public String showGroupDetails(@PathVariable Long groupId, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) return "redirect:/login";
+
+        Group group = groupService.findById(groupId);
+        if (group == null || !group.getCreator().getId().equals(user.getId())) {
+            model.addAttribute("error", "Grupo não encontrado ou acesso negado.");
+            return "group";
+        }
+
+        model.addAttribute("group", group);
+        return "group-members";
+    }
 }

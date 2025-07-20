@@ -6,10 +6,7 @@ import pt.isep.splitix.domain.User;
 import pt.isep.splitix.repository.GroupRepository;
 import pt.isep.splitix.repository.UserRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class GroupService {
@@ -22,21 +19,30 @@ public class GroupService {
     }
 
     public Group createGroup(String name, String creatorEmail, List<String> memberEmails) {
-        User creator = userRepo.findByEmail(creatorEmail).orElseThrow();
+        User creator = userRepo.findByEmail(creatorEmail).orElseThrow(() -> new IllegalArgumentException("Creator not found"));
         Group group = new Group();
         group.setName(name);
         group.setCreator(creator);
 
         Set<User> members = new HashSet<>();
-        for (String email : memberEmails) {
-            userRepo.findByEmail(email).ifPresent(members::add);
+
+        if (memberEmails != null) {
+            for (String email : memberEmails) {
+                userRepo.findByEmail(email).ifPresent(members::add);
+            }
         }
 
+        // Aqui tens que decidir: queres sempre adicionar o criador como membro?
+        // Se sim, adiciona:
         members.add(creator);
+
         group.setMembers(members);
 
         return groupRepo.save(group);
     }
+
+
+
 
     public List<Group> findByCreator(User creator) {
         return groupRepo.findByCreator(creator);
@@ -84,5 +90,10 @@ public class GroupService {
 
         return removed;
     }
+
+    public Group findById(Long groupId) {
+        return groupRepo.findById(groupId).orElse(null);
+    }
+
 }
 

@@ -31,5 +31,4 @@ public class Group {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> members = new HashSet<>();
-
 }

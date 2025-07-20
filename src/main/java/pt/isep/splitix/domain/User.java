@@ -20,6 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToMany(mappedBy = "members")
+    private Set<Group> groups = new HashSet<>();
+
     @NotBlank(message = "The first name can not be empty")
     @Pattern(regexp = "^[A-Z][a-zA-Z]{1,}$", message = "The first name must start with a capital letter")
     @Column(nullable = false)
