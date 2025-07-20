@@ -3,50 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard | Splitix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            background-color: #f6fef6;
-            color: #2e7d32;
+            background-color: #f0fdf4;
+            color: #1b5e20;
         }
 
         header {
             background-color: #2e7d32;
             color: white;
-            padding: 20px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         header .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
         }
+
 
         nav a {
             color: white;
-            margin-left: 20px;
+            margin-left: 30px;
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #c8e6c9;
         }
 
         .container {
             display: grid;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 240px 1fr;
             min-height: 100vh;
         }
 
         aside {
             background-color: #e8f5e9;
-            padding: 20px;
+            padding: 30px 20px;
             border-right: 1px solid #c8e6c9;
         }
 
         aside h2 {
-            margin-top: 0;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             color: #1b5e20;
         }
 
@@ -56,40 +69,87 @@
         }
 
         aside ul li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         aside ul li a {
+            display: block;
+            padding: 10px 15px;
+            border-radius: 8px;
             text-decoration: none;
             color: #2e7d32;
             font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        aside ul li a:hover {
+            background-color: #c8e6c9;
         }
 
         main {
             padding: 40px;
+            background-color: #ffffff;
         }
 
         .card {
-            background-color: white;
+            background-color: #f9fff9;
             border: 1px solid #c8e6c9;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
 
         .card h3 {
             margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        ul li {
+            margin-bottom: 6px;
+        }
+
+        .status-bar {
+            background-color: #e8f5e9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-bar span {
+            margin-right: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                border-right: none;
+                border-bottom: 1px solid #c8e6c9;
+            }
         }
     </style>
 </head>
 <body>
 <header>
-    <div class="logo">$pliti%</div>
+    <a href="/" class="logo">
+        <img src="images/splitx.jpg" alt="$plitix" style="height: 40px; vertical-align: middle;">
+    </a>
     <nav>
-        <a href="/profile">Perfil</a>
-        <a href="/notifications">Notificações</a>
-        <a href="#logout">Logout</a>
+        <a href="/profile"><i class="fa-solid fa-user"></i> Perfil</a>
+        <a href="/notifications"><i class="fa-solid fa-bell"></i> Notificações</a>
+        <a href="#logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </nav>
 </header>
 
@@ -97,40 +157,43 @@
     <aside>
         <h2>Menu</h2>
         <ul>
-            <li><a href="/group-create">Criar Grupo</a></li>
-            <li><a href="/add-friend">Adicionar Amigos</a></li>
-            <li><a href="#saldo">Saldo</a></li>
-            <li><a href="/group">Lista de Grupos</a></li>
+            <li><a href="/group-create"><i class="fa-solid fa-users"></i> Criar Grupo</a></li>
+            <li><a href="/add-friend"><i class="fa-solid fa-user-plus"></i> Adicionar Amigos</a></li>
+            <li><a href="#saldo"><i class="fa-solid fa-scale-balanced"></i> Saldo</a></li>
+            <li><a href="/group"><i class="fa-solid fa-list"></i> Lista de Grupos</a></li>
         </ul>
     </aside>
 
     <main>
         <div class="card">
-            <h3>Bem-vindo, [Utilizador]!</h3>
+            <h3><i class="fa-solid fa-house-user"></i> Bem-vindo, [Utilizador]!</h3>
             <p>Esta é a tua dashboard. Aqui podes acompanhar as tuas despesas partilhadas com amigos e grupos.</p>
         </div>
 
         <div class="card" id="criar-grupo">
-            <h3>Criar Grupo</h3>
-            <p>Funcionalidade em desenvolvimento.</p>
+            <h3><i class="fa-solid fa-users-gear"></i> Criar Grupo</h3>
+            <p>Poderás em breve criar grupos com amigos para partilhar despesas!</p>
         </div>
 
         <div class="card" id="adicionar-amigos">
-            <h3>Adicionar Amigos</h3>
-            <p>Funcionalidade em desenvolvimento.</p>
+            <h3><i class="fa-solid fa-user-plus"></i> Adicionar Amigos</h3>
+            <p>Em breve poderás encontrar amigos e adicioná-los facilmente ao Splitix!</p>
         </div>
 
         <div class="card" id="saldo">
-            <h3>Saldo</h3>
-            <p>Total em dívida: 0€ | Total a receber: 0€</p>
+            <h3><i class="fa-solid fa-wallet"></i> Saldo</h3>
+            <div class="status-bar">
+                <span>Total em dívida: <strong>0€</strong></span>
+                <span>Total a receber: <strong>0€</strong></span>
+            </div>
         </div>
 
         <div class="card" id="grupos">
-            <h3>Lista de Grupos</h3>
+            <h3><i class="fa-solid fa-people-group"></i> Lista de Grupos</h3>
             <ul>
-                <li>Grupo 1 - Casa</li>
-                <li>Grupo 2 - Férias Algarve</li>
-                <li>Grupo 3 - Jantar Sexta</li>
+                <li><i class="fa-solid fa-circle"></i> Grupo 1 - Casa</li>
+                <li><i class="fa-solid fa-circle"></i> Grupo 2 - Férias Algarve</li>
+                <li><i class="fa-solid fa-circle"></i> Grupo 3 - Jantar Sexta</li>
             </ul>
         </div>
     </main>
