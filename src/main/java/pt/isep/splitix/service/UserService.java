@@ -76,8 +76,12 @@ public class UserService {
 
         if (user.equals(friend) || user.getFriends().contains(friend)) return false;
 
+        // Relacionamento bidirecional
         user.getFriends().add(friend);
+        friend.getFriends().add(user);
+
         repo.save(user);
+        repo.save(friend); // <- Isto é importante para manter consistência!
 
         // Criação da notificação de amizade
         Notification notification = new Notification(
@@ -89,6 +93,7 @@ public class UserService {
 
         return true;
     }
+
 
     public User getCurrentUser(HttpSession session) {
         User user = (User) session.getAttribute("user");

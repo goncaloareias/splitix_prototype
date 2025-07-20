@@ -5,7 +5,7 @@
     <title>Adicionar Amigo | Splitix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Usa o mesmo estilo do teu ficheiro de perfil */
+        /* ... mantém o CSS que já tens ... */
         :root {
             --primary: #2e7d32;
             --primary-light: #66bb6a;
@@ -17,7 +17,6 @@
             --danger: #d32f2f;
             --danger-bg: #fdecea;
         }
-
         body {
             margin: 0;
             padding: 2rem;
@@ -25,7 +24,6 @@
             background-color: var(--background);
             color: var(--text);
         }
-
         .container {
             max-width: 640px;
             margin: auto;
@@ -34,18 +32,15 @@
             border-radius: var(--radius);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
-
         h2 {
             color: var(--primary);
             margin-bottom: 1.5rem;
         }
-
         label {
             font-weight: bold;
             display: block;
             margin-bottom: 0.3rem;
         }
-
         input {
             width: 100%;
             padding: 0.75rem;
@@ -54,13 +49,11 @@
             border-radius: var(--radius);
             font-size: 1rem;
         }
-
         input:focus {
             outline: none;
             border-color: var(--primary-light);
             box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
         }
-
         button {
             background-color: var(--primary);
             color: white;
@@ -71,29 +64,24 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         button:hover {
             background-color: var(--primary-light);
         }
-
         .success, .error {
             padding: 0.75rem 1rem;
             border-radius: var(--radius);
             margin-bottom: 1.5rem;
         }
-
         .success {
             background-color: #e8f5e9;
             color: #1b5e20;
             border-left: 5px solid var(--primary);
         }
-
         .error {
             background-color: var(--danger-bg);
             color: var(--danger);
             border-left: 5px solid var(--danger);
         }
-
         .back-button {
             display: inline-block;
             margin-bottom: 1rem;
@@ -102,16 +90,13 @@
             font-weight: 600;
             transition: color 0.2s;
         }
-
         .back-button:hover {
             color: var(--primary-light);
         }
-
         @media (max-width: 480px) {
             .container {
                 padding: 1.5rem;
             }
-
             h2 {
                 font-size: 1.5rem;
             }
@@ -127,8 +112,8 @@
     <div th:if="${success}" class="success" th:text="${success}"></div>
     <div th:if="${error}" class="error" th:text="${error}"></div>
 
-    <form method="post" th:action="@{/friends/add}">
-        <label for="friendEmail">Email do Amigo:</label>
+    <form method="post" th:action="@{/add-friend}">
+    <label for="friendEmail">Email do Amigo:</label>
         <input type="email" id="friendEmail" name="friendEmail" required />
 
         <button type="submit">Adicionar</button>
