@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Membros do Grupo | Splitix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f9f4;
+            color: #2e7d32;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 720px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+        }
+        h2, h3 {
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-button:hover {
+            color: #66bb6a;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        button {
+            background-color: #2e7d32;
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        button:disabled {
+            background-color: #a5d6a7;
+            cursor: default;
+        }
+        button:hover:not(:disabled) {
+            background-color: #66bb6a;
+        }
+        form {
+            margin-top: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: #d32f2f;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .success {
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <a th:href="@{/group}" class="back-button">← Voltar aos Grupos</a>
+
+    <h2 th:text="${group != null} ? ${group.name} : 'Grupo Desconhecido'">Nome do Grupo</h2>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <div th:if="${success}" class="success" th:text="${success}"></div>
+
+    <div th:if="${group != null}">
+        <h3>Membros</h3>
+        <ul>
+            <li th:each="member : ${group.members}">
+                <span th:text="${member.fname + ' ' + member.lname}">Nome do Membro</span>
+                <form th:action="@{'/group/' + ${group.id} + '/remove-member'}" method="post" style="margin: 0;">
+                    <input type="hidden" name="memberEmail" th:value="${member.email}" />
+                    <button type="submit" th:disabled="${member.email == group.creator.email}">Remover</button>
+                </form>
+            </li>
+        </ul>
+
+        <h3>Adicionar Membro</h3>
+        <form th:action="@{'/group/' + ${group.id} + '/add-member'}" method="post">
+            <label for="memberEmail">Email do novo membro:</label>
+            <input type="email" id="memberEmail" name="memberEmail" placeholder="exemplo@dominio.com" required />
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

@@ -32,6 +32,11 @@
             text-decoration: none;
         }
 
+        header .logo-img {
+            height: 60px;
+            object-fit: contain;
+            filter: brightness(0) invert(1); /* Remove se imagem já for branca */
+        }
 
         nav a {
             color: white;
@@ -144,7 +149,7 @@
 <body>
 <header>
     <a href="/" class="logo">
-        <img src="images/splitx.jpg" alt="$plitix" style="height: 40px; vertical-align: middle;">
+        <img src="/images/splitx.png" alt="$plitix" class="logo-img">
     </a>
     <nav>
         <a href="/profile"><i class="fa-solid fa-user"></i> Perfil</a>
