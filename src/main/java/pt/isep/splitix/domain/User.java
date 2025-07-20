@@ -1,4 +1,5 @@
 package pt.isep.splitix.domain;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -57,14 +58,14 @@ public class User {
     )
     private Set<User> friends = new HashSet<>();
 
+    public User() {}
+
     public User(String fname, String lname, String email, String password) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.password = password;
     }
-
-    public User() {}
 
     @Override
     public boolean equals(Object o) {
@@ -77,19 +78,4 @@ public class User {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-
-//getters
-/*
-    public String getFname() {
-        return fname;
-    }
-
-    public Email getEmail(){
-        return this.email;
-    }
-
- */
 }
-
-

@@ -1,9 +1,10 @@
 package pt.isep.splitix.application.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pt.isep.splitix.domain.User;
 import pt.isep.splitix.service.UserService;
 
 @Controller
@@ -17,25 +18,23 @@ public class FriendController {
 
     @GetMapping("/add-friend")
     public String showAddFriendForm() {
-        return "add-friend";  // isto corresponde ao ficheiro templates/add.friends.html
+        return "add-friend"; // Thymeleaf template para o form de adicionar amigo
     }
 
     @PostMapping("/add-friend")
     public String addFriend(@RequestParam("friendEmail") String friendEmail,
+                            HttpSession session,
                             RedirectAttributes redirectAttributes) {
-        // Supondo que tens uma lógica para obter o utilizador atual (exemplo simplificado)
-        String currentUserEmail = "userActual"; // substitui isto pela lógica real
 
-        boolean success = userService.addFriend(currentUserEmail, friendEmail);
+        User currentUser = userService.getCurrentUser(session);
+        boolean success = userService.sendFriendRequest(currentUser.getEmail(), friendEmail);
 
         if (success) {
-            redirectAttributes.addFlashAttribute("success", "Amigo adicionado com sucesso!");
+            redirectAttributes.addFlashAttribute("success", "Pedido de amizade enviado com sucesso!");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Erro: não foi possível adicionar o amigo.");
+            redirectAttributes.addFlashAttribute("error", "Erro: não foi possível enviar o pedido.");
         }
 
         return "redirect:/add-friend";
     }
 }
-
-
