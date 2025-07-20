@@ -153,10 +153,31 @@
     </a>
     <nav>
         <a href="/profile"><i class="fa-solid fa-user"></i> Perfil</a>
-        <a href="/notifications"><i class="fa-solid fa-bell"></i> Notificações</a>
+
+        <a href="/notifications" style="position: relative;">
+            <i class="fa-solid fa-bell"></i> Notificações
+            <span th:if="${notifications != null and #lists.size(notifications) > 0}"
+                  style="
+                      position: absolute;
+                      top: -6px;
+                      right: -10px;
+                      background-color: #d32f2f;
+                      color: white;
+                      font-size: 0.75rem;
+                      font-weight: bold;
+                      padding: 2px 6px;
+                      border-radius: 50%;
+                      min-width: 20px;
+                      text-align: center;
+                      line-height: 1;
+                  "
+                  th:text="${#lists.size(notifications)}">0</span>
+        </a>
+
         <a href="#logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </nav>
 </header>
+
 
 <div class="container">
     <aside>

@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Notificações | Splitix</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
         :root {
             --primary: #2e7d32;
-            --primary-light: #66bb6a;
+            --danger: #d32f2f;
+            --white: #fff;
             --background: #f6fef6;
-            --text: #2f4f2f;
-            --white: #ffffff;
             --border: #c8e6c9;
             --radius: 12px;
-            --danger: #d32f2f;
-            --danger-bg: #fdecea;
-        }
-
-        * {
-            box-sizing: border-box;
+            --text: #2f4f2f;
         }
 
         body {
@@ -53,13 +47,12 @@
             font-weight: 600;
             transition: color 0.2s;
         }
-
         .back-button:hover {
-            color: var(--primary-light);
+            color: #66bb6a;
         }
 
         ul.notifications-list {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
         }
 
@@ -71,6 +64,9 @@
             background-color: #f1f8e9;
             color: var(--text);
             box-shadow: inset 0 0 5px rgba(46, 125, 50, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         ul.notifications-list li strong {
@@ -78,11 +74,52 @@
             margin-right: 0.5rem;
         }
 
+        .btn-group button {
+            background-color: var(--primary);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            margin-left: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn-group button.reject {
+            background-color: var(--danger);
+        }
+
+        .btn-group button:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Contador de notificações no menu (exemplo) */
+        .notification-badge {
+            position: relative;
+            display: inline-block;
+        }
+        .notification-badge[data-count]:after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: var(--danger);
+            color: var(--white);
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 20px;
+            font-weight: 700;
+            box-shadow: 0 0 1px #fff;
+        }
+
         @media (max-width: 480px) {
             .container {
                 padding: 1.5rem;
             }
-
             h2 {
                 font-size: 1.5rem;
             }
@@ -91,6 +128,7 @@
 </head>
 <body>
 <div class="container">
+
     <a th:href="@{/dashboard}" class="back-button">← Voltar à Dashboard</a>
 
     <h2>Notificações</h2>
@@ -99,13 +137,23 @@
         <p>Não tens novas notificações.</p>
     </div>
 
-    <div th:unless="${notifications.isEmpty()}">
-        <ul class="notifications-list">
-            <li th:each="n : ${notifications}">
-                <strong th:text="${n.type}">TIPO</strong>: <span th:text="${n.message}">Mensagem</span>
-            </li>
-        </ul>
-    </div>
+    <ul class="notifications-list" th:unless="${notifications.isEmpty()}">
+        <li th:each="n : ${notifications}">
+            <div>
+                <strong th:text="${n.type}">TIPO</strong>:
+                <span th:text="${n.message}">Mensagem da notificação</span>
+            </div>
+
+            <div th:if="${n.type.name() == 'FRIEND_REQUEST'}" class="btn-group">
+                <form th:action="@{'/notifications/requests/' + ${n.id} + '/accept'}" method="post" style="display:inline">
+                    <button type="submit">Aceitar</button>
+                </form>
+                <form th:action="@{'/notifications/requests/' + ${n.id} + '/reject'}" method="post" style="display:inline">
+                    <button type="submit" class="reject">Rejeitar</button>
+                </form>
+            </div>
+        </li>
+    </ul>
 </div>
 </body>
 </html>

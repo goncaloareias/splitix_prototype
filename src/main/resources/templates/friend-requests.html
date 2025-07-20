@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pedidos de Amizade | Splitix</title>
+</head>
+<body>
+<h1>Pedidos de amizade pendentes</h1>
+
+<div th:if="${requests.isEmpty()}">
+    <p>Não tens pedidos pendentes.</p>
+</div>
+
+<div th:each="request : ${requests}">
+    <p>
+        <strong th:text="${request.sender.fname}">Nome</strong> quer ser teu amigo.
+    </p>
+    <form th:action="@{'/friend-request/' + ${request.id} + '/accept'}" method="post" style="display:inline">
+        <button type="submit">Aceitar</button>
+    </form>
+    <form th:action="@{'/friend-request/' + ${request.id} + '/reject'}" method="post" style="display:inline">
+        <button type="submit">Rejeitar</button>
+    </form>
+</div>
+
+</body>
+</html>
