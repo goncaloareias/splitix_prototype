@@ -4,100 +4,137 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Registar Utilizador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2a6f4a;
+            --primary-light: #4caf50;
+            --bg-light: #f5f9f7;
+            --text-dark: #2a2a2a;
+            --error-bg: #ffefef;
+            --success-bg: #e2fbe9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f9f7;
-            color: #2a6f4a;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
         .container {
-            background: white;
-            padding: 40px 50px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(42,111,74,0.15);
+            background: #fff;
+            padding: 45px 50px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
             width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
+            max-width: 420px;
+            animation: fadeIn 0.5s ease-in-out;
         }
+
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
             font-weight: 700;
+            font-size: 26px;
+            color: var(--primary);
         }
+
         label {
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
         }
+
         input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
             padding: 12px 14px;
-            margin-bottom: 20px;
-            border: 1.8px solid #2a6f4a;
-            border-radius: 8px;
-            font-size: 16px;
+            margin-bottom: 18px;
+            border: 1.5px solid #cce3d8;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.2);
             outline: none;
-            transition: border-color 0.3s ease;
         }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: #4caf50;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
-        }
+
         .btn {
-            background-color: #2a6f4a;
+            background: var(--primary);
             color: white;
             border: none;
             padding: 14px;
             width: 100%;
             font-size: 16px;
-            font-weight: 700;
-            border-radius: 8px;
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s;
         }
+
         .btn:hover {
-            background-color: #4caf50;
+            background: var(--primary-light);
+            transform: translateY(-1px);
         }
+
+        .error, .success {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
         .error {
-            background-color: #ffcccc;
-            color: #a00;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
+            background-color: var(--error-bg);
+            color: #b00020;
         }
+
         .success {
-            background-color: #c9f5d2;
-            color: #2a6f4a;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
+            background-color: var(--success-bg);
+            color: var(--primary);
         }
+
         .login-link {
-            margin-top: 15px;
+            margin-top: 18px;
             text-align: center;
             font-size: 14px;
         }
+
         .login-link a {
-            color: #2a6f4a;
+            color: var(--primary);
             text-decoration: none;
             font-weight: 600;
         }
+
         .login-link a:hover {
             text-decoration: underline;
-            color: #4caf50;
+            color: var(--primary-light);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -105,9 +142,7 @@
 <div class="container">
     <h1>Registar Utilizador</h1>
 
-    <!-- Mensagem de erro -->
     <div th:if="${error}" class="error" th:text="${error}"></div>
-    <!-- Mensagem de sucesso -->
     <div th:if="${success}" class="success" th:text="${success}"></div>
 
     <form method="post" action="/register">

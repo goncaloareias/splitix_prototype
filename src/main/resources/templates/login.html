@@ -4,18 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login | Splitix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset simples */
+        :root {
+            --primary: #2a6f4a;
+            --primary-light: #4caf50;
+            --bg-light: #f5f9f7;
+            --text-dark: #2a2a2a;
+            --error-bg: #ffefef;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: #f0f5f1; /* branco esverdeado bem suave */
-            color: #1b3a1a; /* verde escuro */
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,94 +30,103 @@
         }
 
         .login-container {
-            background: white;
-            padding: 2.5rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(27, 58, 26, 0.15);
-            width: 350px;
+            background: #fff;
+            padding: 45px 50px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 32px;
             font-weight: 700;
-            font-size: 1.8rem;
-            color: #2e7d32; /* verde médio */
-            letter-spacing: 1px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+            font-size: 26px;
+            color: var(--primary);
         }
 
         label {
             font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
             display: block;
-            color: #1b3a1a;
         }
 
         input[type="text"],
         input[type="password"] {
-            padding: 0.65rem 1rem;
-            border: 2px solid #a5d6a7; /* verde claro */
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cce3d8;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            border-color: #2e7d32;
+        input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.2);
             outline: none;
         }
 
         button {
-            background-color: #2e7d32;
+            background-color: var(--primary);
             color: white;
-            padding: 0.75rem;
+            padding: 14px;
+            width: 100%;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s;
         }
 
         button:hover {
-            background-color: #1b3a1a;
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         .error-message {
-            background-color: #ffcdd2;
-            color: #b71c1c;
-            padding: 0.8rem 1rem;
+            background-color: var(--error-bg);
+            color: #b00020;
+            padding: 12px 16px;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            font-size: 14px;
+            margin-bottom: 20px;
             font-weight: 600;
-            font-size: 0.9rem;
             text-align: center;
         }
 
         .footer {
-            margin-top: 1.5rem;
+            margin-top: 20px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 14px;
             color: #4a7c4a;
         }
 
         .footer a {
-            color: #2e7d32;
+            color: var(--primary);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .footer a:hover {
-            color: #1b3a1a;
+            color: var(--primary-light);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
